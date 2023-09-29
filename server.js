@@ -22,13 +22,32 @@ app.post("/jwt", (req, res) => {
   });
 });
 
-// User invite hook
-app.post("/userinvite", (req, res) => {
-  const action = req.body.data.action;   // action: 'CREATE',
-  const user = req.body.data.user;      // user: { email: 'demo@email.com', metadata: '{}' },
-  const tenantNumOfUsers = req.body.data.tenant.numberOfUsers;  // tenant: { numberOfUsers: 10 }
+// User signup hook
+app.post("/usersignup", (req, res) => {
+  const user = req.body.data.user;      //  "user": { "ipAddress": "1.1.1.1", "email": "demo@email.com", "provider": "local", "metadata": "{\"code\":\"mycode\"}" }
+  const provider = req.body.data.user.provider;
+  const ipAddress = req.body.data.user.ipAddress;
 
-  console.log(`New request:\nemail = ${user.email}\nmetadata = ${user.metadata}\n tenant = ${tenantNumOfUsers}`);
+
+  if (user.ipAddress !== "255.255.255.0") {
+      return res.send({
+          continue: true,
+      });
+  } else {
+      return res.status(401).send({
+          // Throw error if the user's IP is not what we expect
+          continue: false,
+          error: {
+              status: 401,
+              message: ["Only requests from IP 255.255.255.0 are allowed to complete signup!"]
+          },
+      });
+  }
+});
+
+// User invite hook
+app.post("/usersignup", (req, res) => {
+  const user = req.body.data.user;      // user: { email: 'demo@email.com', metadata: '{}' },
 
   if (user.email.endsWith("@acme.com")) {
       return res.send({
@@ -40,7 +59,7 @@ app.post("/userinvite", (req, res) => {
           continue: false,
           error: {
               status: 401,
-              message: ["Only ACME employees are allowed to join this account!"]
+              message: ["Only ACME employees are allowed to sign up!"]
           },
       });
   }
