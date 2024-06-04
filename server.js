@@ -67,17 +67,20 @@ app.post("/usersignup", (req, res) => {
 
 // User SAML authentication hook
 app.post("/saml", (req, res) => {
-  const { email } = req.body.data.samlMetadata.email;
-  console.log(`New request:\nemail:\n${email}\n\nRequest:\n${req.body}`)
+  console.log("New request!\n", req.body.data)
+  const email = req.body.data.samlMetadata.email;
   return res.send({
     continue: true,
     response: {
       user: {
+        firstName: "myFirstName",
+        lastName: "myLastName",
         email: email,
         metadata: JSON.stringify({
-          "fieldA": "valueX",
-          "fieldB": "valueY"
-        })
+          "fieldC": "valueC",
+          "fieldD": "valueD"
+        }),
+        roleIds:[""]
       }
     },
   });
