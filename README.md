@@ -15,7 +15,8 @@ Follow these steps to set up and run the examples:
    nodemon server.js
    
 3. Open a second terminal window, run `ngrok http 5000`
-   You will get an endpoint, like `https://[ID].ngrok-free.app` where you can send all the Prehook events.
+   You will get an endpoint, like `https://[ID].ngrok-free.app`.
+   You will send all the Prehook events to this endpoint.
 
 ### Setting Up Prehook Endpoints
 For example, to test the invite endpoint, set the endpoint in the Frontegg prehook setup to:
