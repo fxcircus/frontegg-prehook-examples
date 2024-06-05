@@ -19,7 +19,8 @@ Follow these steps to set up and run the examples:
    You will send all the Prehook events to this endpoint.
 
 ### Setting Up Prehook Endpoints
-For example, to test the invite endpoint, set the endpoint in the Frontegg prehook setup to:
+Use the appropriate route for each prehook.
+   For example, to test the invite endpoint, set the endpoint in the Frontegg prehook setup to:
    ```bash
    https://[ID].ngrok-free.app/invite
    
